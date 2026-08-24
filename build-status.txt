@@ -1,3 +1,16 @@
-status=running
+status=success
 commit=6b95c38fe5eaafa13e9c2147038ce137f9c56ab8
 run_id=32686733514
+checkout=success
+mark_running=success
+setup_node=success
+setup_java=success
+npm_install=success
+source_check=success
+prepare_web=success
+capacitor_android=success
+stable_debug_signing=success
+gradle_build=success
+verify_apk=success
+upload_artifact=success
+publish_release=success
