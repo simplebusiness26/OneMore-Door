@@ -1,0 +1,19 @@
+{
+  "name": "one-more-door",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ONE MORE DOOR - mobile-first neon arcade roguelite",
+  "scripts": {
+    "check": "node --check core.js && node --check flow.js && node --check mechanics.js && node --check progression.js && node --check render.js && node --check boot.js",
+    "build:web": "rm -rf dist && mkdir -p dist/icons && cp index.html styles.css core.js flow.js mechanics.js progression.js render.js boot.js manifest.webmanifest sw.js dist/ && cp icons/icon.svg dist/icons/",
+    "android:add": "npx cap add android",
+    "android:sync": "npx cap sync android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.0",
+    "@capacitor/core": "^8.5.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.5.0"
+  }
+}
