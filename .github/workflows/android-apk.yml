@@ -1,0 +1,75 @@
+name: Build ONE MORE DOOR Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore:
+      - build-status.txt
+
+permissions:
+  contents: write
+
+concurrency:
+  group: one-more-door-android
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          package-manager-cache: false
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Validate source
+        run: npm run check
+      - name: Prepare web bundle
+        run: npm run build:web
+      - name: Create and sync Android project
+        run: |
+          rm -rf android
+          npx cap add android
+          npx cap sync android
+      - name: Install stable debug signing key
+        run: |
+          mkdir -p "$HOME/.android"
+          base64 --decode .github/one-more-door-debug.keystore.b64 > "$HOME/.android/debug.keystore"
+          echo "2b469109f41ef842eda68f99fcd4078c7b56eb9d36a7cc0b64d49b70eb394af9  $HOME/.android/debug.keystore" | sha256sum -c -
+          keytool -list -keystore "$HOME/.android/debug.keystore" -storepass android -alias androiddebugkey >/dev/null
+      - name: Build APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon --stacktrace
+      - name: Prepare APK
+        run: |
+          cp android/app/build/outputs/apk/debug/app-debug.apk one-more-door-debug.apk
+          test -s one-more-door-debug.apk
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: one-more-door-debug-apk
+          path: one-more-door-debug.apk
+          if-no-files-found: error
+          retention-days: 30
+      - name: Publish rolling release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view one-more-door-latest >/dev/null 2>&1; then
+            gh release upload one-more-door-latest one-more-door-debug.apk --clobber
+          else
+            gh release create one-more-door-latest one-more-door-debug.apk --title "ONE MORE DOOR Android APK" --notes "Latest installable debug APK for ONE MORE DOOR."
+          fi
