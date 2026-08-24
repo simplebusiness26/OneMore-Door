@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
+  <meta name="theme-color" content="#05060b" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>ONE MORE DOOR</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main id="app">
+    <canvas id="game" aria-label="One More Door game arena"></canvas>
+
+    <section id="topHud" class="hud hidden" aria-live="polite">
+      <div class="hud-pill"><span class="coin-dot"></span><span id="runCoins">0</span></div>
+      <div class="hud-center"><strong id="roomCount">0</strong><span>DOORS</span></div>
+      <div class="hud-pill purple"><strong id="multiplier">x1</strong></div>
+    </section>
+
+    <section id="screenTitle" class="screen title-screen">
+      <div class="eyebrow">THE BUILDING ALWAYS WANTS</div>
+      <h1>ONE MORE<br><span>DOOR</span></h1>
+      <p class="tagline">Bank the run. Or risk everything.</p>
+      <div class="title-stats">
+        <div><span>BEST</span><strong id="titleBest">0</strong></div>
+        <div><span>BANK</span><strong id="titleBank">0</strong></div>
+        <div><span>DAILY</span><strong id="titleDaily">—</strong></div>
+      </div>
+      <button id="playBtn" class="primary big">ENTER THE BUILDING</button>
+      <div class="button-row">
+        <button id="dailyBtn" class="secondary">DAILY DOOR</button>
+        <button id="upgradesBtn" class="secondary">LOADOUT</button>
+        <button id="statsBtn" class="secondary">STATS</button>
+      </div>
+      <button id="soundBtn" class="text-btn">SOUND: ON</button>
+      <p class="hint">Drag to move · tap to dash · survive the room</p>
+    </section>
+
+    <section id="screenDoor" class="screen hidden door-screen">
+      <div class="eyebrow">CHOOSE</div>
+      <h2>WHAT'S BEHIND<br>THE NEXT DOOR?</h2>
+      <div id="doorGrid" class="door-grid"></div>
+      <p class="hint">Colour hints at the risk. Nothing is guaranteed.</p>
+    </section>
+
+    <section id="screenBank" class="screen hidden bank-screen">
+      <div class="eyebrow danger-text">CHECKPOINT</div>
+      <h2>TAKE IT…<br>OR TEMPT IT?</h2>
+      <div class="bank-card">
+        <span>CURRENT RUN</span>
+        <strong id="bankAmount">0</strong>
+        <small>COINS</small>
+      </div>
+      <button id="bankBtn" class="secondary bank-action">BANK & LEAVE</button>
+      <button id="riskBtn" class="primary risk-action">ONE MORE DOOR</button>
+      <p id="riskCopy" class="hint">Your multiplier climbs. If you fall, the run is gone.</p>
+    </section>
+
+    <section id="screenGameOver" class="screen hidden end-screen">
+      <div class="eyebrow danger-text">THE BUILDING WON</div>
+      <h2><span id="deadRooms">0</span> DOORS</h2>
+      <p id="deadCopy" class="tagline">You lost the run.</p>
+      <div class="end-stats">
+        <div><span>RUN LOST</span><strong id="lostCoins">0</strong></div>
+        <div><span>BEST</span><strong id="deadBest">0</strong></div>
+      </div>
+      <button id="againBtn" class="primary big">ONE MORE?</button>
+      <button id="homeFromDead" class="text-btn">BACK TO LOBBY</button>
+    </section>
+
+    <section id="screenBanked" class="screen hidden end-screen">
+      <div class="eyebrow gold-text">LOCKED IN</div>
+      <h2>BANKED<br><span id="bankedResult">0</span></h2>
+      <p class="tagline">Smart. Probably.</p>
+      <button id="bankedAgainBtn" class="primary big">GO AGAIN</button>
+      <button id="homeFromBank" class="text-btn">BACK TO LOBBY</button>
+    </section>
+
+    <section id="screenUpgrades" class="screen hidden menu-screen">
+      <div class="menu-head">
+        <button class="backBtn text-btn">← BACK</button>
+        <div><span>LOADOUT</span><strong id="upgradeBank">0 COINS</strong></div>
+      </div>
+      <h2>MAKE YOUR<br>OWN LUCK.</h2>
+      <p class="hint left">Buy permanent abilities. Equip up to three.</p>
+      <div id="upgradeList" class="upgrade-list"></div>
+    </section>
+
+    <section id="screenStats" class="screen hidden menu-screen">
+      <div class="menu-head">
+        <button class="backBtn text-btn">← BACK</button>
+        <div><span>RECORDS</span></div>
+      </div>
+      <h2>THE BUILDING<br>REMEMBERS.</h2>
+      <div id="statsList" class="stats-list"></div>
+    </section>
+
+    <section id="screenPause" class="screen hidden pause-screen">
+      <div class="eyebrow">PAUSED</div>
+      <h2>DON'T BLINK.</h2>
+      <button id="resumeBtn" class="primary big">RESUME</button>
+      <button id="quitBtn" class="secondary">ABANDON RUN</button>
+    </section>
+
+    <button id="pauseBtn" class="pause-btn hidden" aria-label="Pause game">Ⅱ</button>
+    <div id="toast" class="toast hidden"></div>
+  </main>
+
+  <script src="core.js"></script>
+  <script src="flow.js"></script>
+  <script src="mechanics.js"></script>
+  <script src="progression.js"></script>
+  <script src="render.js"></script>
+  <script src="boot.js"></script>
+</body>
+</html>

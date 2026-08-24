@@ -1,0 +1,13 @@
+{
+  "name": "One More Door",
+  "short_name": "One More Door",
+  "description": "A fast neon risk/reward arcade roguelite. Bank the run or open one more door.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#05060b",
+  "theme_color": "#05060b",
+  "orientation": "portrait",
+  "icons": [
+    {"src":"icons/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
