@@ -129,3 +129,5 @@ jobs:
           git add -A
           git commit -m "Move ONE MORE DOOR into dedicated repository"
           git push
+
+# migration trigger
