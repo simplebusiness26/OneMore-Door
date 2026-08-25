@@ -1,11 +1,11 @@
 {
   "name": "one-more-door",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "private": true,
-  "description": "ONE MORE DOOR - mission-driven mobile arcade heist roguelite",
+  "description": "ONE MORE DOOR - objective-driven mobile arcade heist roguelite",
   "scripts": {
-    "check": "node --check core.js && node --check flow.js && node --check mechanics.js && node --check progression.js && node --check render.js && node --check v2.js && node --check v2-fixes.js && node --check boot.js",
-    "build:web": "rm -rf dist && mkdir -p dist/icons && cp index.html styles.css v2.css core.js flow.js mechanics.js progression.js render.js v2.js v2-fixes.js boot.js manifest.webmanifest sw.js dist/ && cp icons/icon.svg dist/icons/",
+    "check": "node --check core.js && node --check flow.js && node --check mechanics.js && node --check progression.js && node --check render.js && node --check v2.js && node --check v2-fixes.js && node --check missions.js && node --check boot.js",
+    "build:web": "rm -rf dist && mkdir -p dist/icons && cp index.html styles.css v2.css missions.css core.js flow.js mechanics.js progression.js render.js v2.js v2-fixes.js missions.js boot.js manifest.webmanifest sw.js dist/ && cp icons/icon.svg dist/icons/",
     "android:add": "npx cap add android",
     "android:sync": "npx cap sync android"
   },
